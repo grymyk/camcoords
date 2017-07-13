@@ -1,0 +1,9 @@
+.camera {
+    width: auto;
+    height: 48px;
+    background: #fff;
+    position: relative;
+    top: 8px;
+    left: 460px;
+    display: inline-block;
+}

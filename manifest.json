@@ -1,16 +1,23 @@
 {
+  "manifest_version": 2,
   "name": "Google Maps URL Parser",
-  "description": "Get coordinats of map and camera from Google Maps URL",
   "version": "1.0",
-  "permissions": [
-    "activeTab"
-  ],
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
-  },
+  "description": "Get coordinats of map and camera from Google Maps URL",
   "browser_action": {
     "default_title": "Parse Google Maps URL"
   },
-  "manifest_version": 2
+  "author":"Mykola Grytsai",
+  "background": {
+    "scripts": ["parser.js", "index.js"],
+    "persistent": false
+  },
+  "content_scripts": [{
+    "matches": ["https://*/maps*"],
+    "css": ["content.css"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }],
+  "permissions": [
+    "activeTab"
+  ]
 }
