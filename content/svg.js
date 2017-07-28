@@ -2,12 +2,45 @@
 
 let svg = {};
 
+svg.updateColor = function updateColor(altitude) {
+    let lightness = Math.trunc(10000 / altitude);
+
+    return 'hsl(235, 50%, ' + lightness + '%)';
+};
+
+svg.getCenter = function getCenter(elem) {
+    let html = document.documentElement;
+
+    let htmlWidth = html.clientWidth;
+    let htmlHeight = html.clientHeight;
+
+    let x = (htmlWidth - elem.width) / 2;
+    let y = (htmlHeight - elem.height) / 2;
+
+    return { x, y }
+};
+
+svg.makeBase = function makeBase() {
+    base = document.createElement('div');
+
+    base.id = 'base';
+
+    let center = svg.getCenter({width: 120, height: 120});
+
+    base.style.left = center.x + 'px';
+    base.style.top = center.y + 'px';
+
+    return base;
+};
+
 svg.createSVG = function createSVG(polygon) {
     //console.log('createSVG');
 
-    const SVG_NS = 'http://www.w3.org/2000/svg';
     let size = 120;
-    let viewBox = '0 0 120 120';
+
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+
+    let viewBox = '0 0 ' + size + ' ' + size;
 
     let building = document.createElementNS(SVG_NS, 'svg');
 
@@ -27,6 +60,11 @@ svg.createPolygon = function createPolygon() {
 
     return '<polygon ' +
         'points="60,20 100,40 100,80 60,100 20,80 20,40"' +
-        'style="fill: red; stroke: blue; stroke-width: 1"' +
+        'style="fill: #666; stroke: #000; stroke-width: 1"' +
         '/>';
+};
+
+
+svg.clearPolygon = function clearPolygon() {
+    return '';
 };

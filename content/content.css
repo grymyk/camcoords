@@ -4,10 +4,12 @@
     background: #fff;
     position: relative;
     top: 8px;
-    left: 460px;
+    left: 8px;
     display: inline-block;
 }
 
 #base {
     position: relative;
+    top: 50px;
+    left: 0;
 }
