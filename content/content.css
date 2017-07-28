@@ -7,3 +7,7 @@
     left: 460px;
     display: inline-block;
 }
+
+#base {
+    position: relative;
+}

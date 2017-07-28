@@ -1,20 +1,20 @@
 {
   "manifest_version": 2,
-  "name": "Google Maps URL Parser",
+  "name": "Overlay of Google Earth",
   "version": "1.0",
-  "description": "Get coordinats of map and camera from Google Maps URL",
+  "description": "Overlay 3D object on Google Earth",
   "browser_action": {
-    "default_title": "Parse Google Maps URL"
+    "default_title": "Overlay"
   },
   "author":"Mykola Grytsai",
   "background": {
-    "scripts": ["parser.js", "index.js"],
+    "scripts": ["bg/parser.js", "bg/index.js"],
     "persistent": false
   },
   "content_scripts": [{
     "matches": ["https://*/maps*"],
-    "css": ["content.css"],
-    "js": ["content.js"],
+    "css": ["content/content.css"],
+    "js": ["content/svg.js", "content/polygon.js", "content/content.js"],
     "run_at": "document_idle"
   }],
   "permissions": [
