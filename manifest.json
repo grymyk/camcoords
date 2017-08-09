@@ -8,16 +8,16 @@
   },
   "author":"Mykola Grytsai",
   "background": {
-    "scripts": ["bg/parser.js", "bg/index.js"],
+    "scripts": ["bg/gmaps.js", "bg/config.js", "bg/index.js"],
     "persistent": false
   },
   "content_scripts": [{
     "matches": ["https://*/maps*"],
     "css": ["content/content.css"],
-    "js": ["content/svg.js", "content/polygon.js", "content/content.js"],
+    "js": ["content/svg.js", "content/content.js"],
     "run_at": "document_idle"
   }],
   "permissions": [
-    "activeTab"
+    "tabs"
   ]
 }

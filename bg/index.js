@@ -3,23 +3,27 @@
 let camera = null;
 
 chrome.browserAction.onClicked.addListener( (tab)=> {
-    //console.log('Click');
-    //console.log('URL: ', tab.url);
+    // case 1
+    gmaps.setCamera(tab.id);
 
-    camera = gmaps.parseUrl(tab.url);
+    // case 2
+    //camera = gmaps.parseUrl(tab.url);
+    //gmaps.getCameraCoords(tab.id, camera, chrome.tabs.sendMessage);
     //console.log(camera);
 
-    chrome.tabs.sendMessage(tab.id, camera);
+    // case 3
+    //chrome.tabs.sendMessage(tab.id, camera);
 });
 
 chrome.tabs.onUpdated.addListener( (tabId, changeInfo, tab)=> {
-    //console.log('Update');
-
     if (changeInfo && changeInfo.url) {
-        //console.log(changeInfo.url);
+        console.log(changeInfo.url);
 
-        camera = gmaps.parseUrl(changeInfo.url);
+        setTimeout(function () {
+            camera = gmaps.parseUrl(changeInfo.url);
+            console.log(camera);
 
-        chrome.tabs.sendMessage(tabId, camera);
+            chrome.tabs.sendMessage(tabId, camera);
+        }, 2000);
     }
 });

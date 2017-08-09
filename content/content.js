@@ -2,16 +2,9 @@
 
 let elem = null;
 let base = null;
-
-function updateColor(altitude) {
-    let lightness = Math.trunc(10000 / altitude);
-
-    return 'hsl(235, 50%, ' + lightness + '%)';
-}
+let oldBuilding = null;
 
 function createObj(data) {
-    //console.log('Create Object');
-
     elem = document.createElement('div');
 
     elem.className = 'camera';
@@ -20,22 +13,33 @@ function createObj(data) {
     document.body.appendChild(elem);
 }
 
-function createBuilding() {
+function createBuilding(data) {
     console.log('createBuilding');
 
-    let polygon = svg.createPolygon();
+    let svgOptions = svg.makeSvgOptions(data);
+
+    let polygon = svg.createPolygon(svgOptions);
     base = svg.makeBase();
 
     let building = svg.createSVG(polygon);
 
-    base.appendChild(building);
+    oldBuilding = base.appendChild(building);
 
     document.body.appendChild(base);
 }
 
-function updateBuilding() {
-    console.log('updateBuilding');
+function updateBuilding(data) {
+    //console.log('updateBuilding');
 
+    let svgOptions = svg.makeSvgOptions(data);
+    let polygon = svg.createPolygon(svgOptions);
+    let newBuilding = svg.createSVG(polygon);
+
+    //console.log('new: ', newBuilding);
+    //console.log('old: ', oldBuilding);
+
+    base.removeChild(oldBuilding);
+    oldBuilding = base.appendChild(newBuilding);
 }
 
 function updateObj(data) {
@@ -45,17 +49,15 @@ function updateObj(data) {
 
     let style = elem.style;
 
-    style.backgroundColor = updateColor(altitude);
+    style.backgroundColor = svg.updateColor(altitude);
     //updateColor(data.a);
 
     elem.innerHTML = JSON.stringify(data);
 }
 
 chrome.runtime.onMessage.addListener( (message, sender, sendResponse)=> {
-    //console.log('Message');
-
     if (elem && base) {
-        //updateBuilding();
+        updateBuilding(message);
         updateObj(message);
     } else {
         createBuilding(message);

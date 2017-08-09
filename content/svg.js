@@ -2,6 +2,15 @@
 
 let svg = {};
 
+svg.makeSvgOptions = function makeSvgOptions(data) {
+    let options = {};
+
+    let altitude = data.a || data.m;
+    options.color = svg.updateColor(altitude);
+
+    return options;
+};
+
 svg.updateColor = function updateColor(altitude) {
     let lightness = Math.trunc(10000 / altitude);
 
@@ -50,18 +59,19 @@ svg.createSVG = function createSVG(polygon) {
 
     building.innerHTML = polygon;
 
-    //console.log(building);
-
     return building;
 };
 
-svg.createPolygon = function createPolygon() {
+svg.createPolygon = function createPolygon(options) {
     //console.log('createPolygon');
 
-    return '<polygon ' +
-        'points="60,20 100,40 100,80 60,100 20,80 20,40"' +
-        'style="fill: #666; stroke: #000; stroke-width: 1"' +
-        '/>';
+    let style = 'style="stroke: #000; stroke-width: 1; ';
+    style += 'fill:' + options.color + '"';
+
+    // let points = 'points="60,20 100,40 100,80 60,100 20,80 20,40"';
+    let points = 'points="0,0 0,60 60,60 60,0"';
+
+    return '<polygon ' + points + style + '/>';
 };
 
 
